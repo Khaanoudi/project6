@@ -16,10 +16,12 @@ def get_saudi_news_from_api(company_name):
         for article in news_data["data"]:
             title = article["title"]
             description = article.get("summary", "")
-            source = article["source"]["name"]
+            
+            # Safely handle the 'source' field
+            source = article["source"]["name"] if article.get("source") else "Unknown"
             url = article["url"]
             
-            # Sentiment analysis (you can modify this part based on your own sentiment model)
+            # Sentiment analysis (simplified)
             sentiment_label = "Positive" if "positive" in title.lower() else "Negative"
             
             articles.append((title, description, source, sentiment_label, url))
