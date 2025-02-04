@@ -17,7 +17,9 @@ def get_saudi_news_from_api():
         for article in news_data["data"]:
             title = article["title"]
             description = article.get("summary", "")
-            source = article["source"]["name"] if article.get("source") else "Unknown"
+            
+            # Handle the case where 'source' might be missing or null
+            source = article.get("source", {}).get("name", "Unknown")  # Use .get() for safe access
             url = article["url"]
             
             # Sentiment analysis using TextBlob
