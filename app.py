@@ -18,8 +18,14 @@ def get_saudi_news_from_api():
             title = article["title"]
             description = article.get("summary", "")
             
-            # Handle the case where 'source' might be missing or null
-            source = article.get("source", {}).get("name", "Unknown")  # Use .get() for safe access
+            # Safely handle the 'source' field with additional checks
+            source = "Unknown"
+            try:
+                if article.get("source") and article["source"].get("name"):
+                    source = article["source"]["name"]
+            except Exception as e:
+                st.write(f"Error processing source: {e}")
+
             url = article["url"]
             
             # Sentiment analysis using TextBlob
